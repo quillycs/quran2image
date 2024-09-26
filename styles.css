@@ -1,0 +1,23 @@
+body {
+    font-size: 3vh;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+.button_container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-size: 3vh;
+    padding: 0.5em 1em;
+    align-self: center;
+}
