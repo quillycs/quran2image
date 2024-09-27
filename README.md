@@ -1,2 +1,2 @@
-# randomquranverse
-Generates a random verse from the Qur'an.
+# quran2image
+Generate an image of a verse from the Quran.
