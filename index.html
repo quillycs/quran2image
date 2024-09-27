@@ -4,24 +4,29 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Random Qur'an Verse Generator</title>
+    <title>quran2image</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
 </head>
 
 <body>
     <div class="container">
-        <h1>Random Qur'an Verse Generator</h1>
+        <h1>quran2image</h1>
 
-        <div class="verse_container">
+        <div id="verse_container">
             <!--<p id="glyph_text" style="text-align: right;"></p>-->
             <p id="verse_text">Generate a verse.</p>
         </div>
 
         <div class="button_container">
             <button onclick="generateVerse()">Generate</button>
-            <button onclick="copyVerseAsImage()">Copy as image</button>
+            <button onclick="downloadImage()">Download</button>
+            <button onclick="copyVerseAsImage()">Copy</button>
+            <!--<button onclick="invertTextColour()">Invert</button>-->
         </div>
+
+        <!--<input type="text" id="background_image_link">
+        <button onclick="setBackgroundImage()">Set background image</button>-->
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
