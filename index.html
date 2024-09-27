@@ -13,15 +13,18 @@
     <div class="container">
         <h1>Random Qur'an Verse Generator</h1>
 
-        <p id="glyph_text" style="text-align: right;"></p>
-        <p id="verse_text"></p>
+        <div class="verse_container">
+            <p id="glyph_text" style="text-align: right;"></p>
+            <p id="verse_text">Generate a verse.</p>
+        </div>
 
         <div class="button_container">
             <button onclick="generateVerse()">Generate</button>
-            <button>Copy</button>
+            <button onclick="copyVerseAsImage()">Copy as image</button>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src='index.js'></script>
 </body>
 
