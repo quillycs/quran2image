@@ -26,25 +26,28 @@ function generateVerse() {
         .then(response => response.json())
         .then(data => {
             chapter_name = data.chapter.name_simple;
-            const url4 = 'https://api.quran.com/api/v4/quran/verses/code_v1?verse_key=' + verse_key;
+            /* const url4 = 'https://api.quran.com/api/v4/quran/verses/code_v1?verse_key=' + verse_key;*/
+            const url4 = 'https://api.quran.com/api/v4/quran/verses/uthmani?verse_key=' + verse_key;
             return fetch(url4);
         })
 
         .then(response => response.json())
         .then(data => {
-            glyph_text = data.verses[0].code_v1;
+            //glyph_text = data.verses[0].code_v1;
+            glyph_text = data.verses[0].text_uthmani;
 
-            console.log("Name: [" + verse_page_number.toString() + "]");
-
-            const fontFace = new FontFace("custom_font", `url(fonts/QCF_P${verse_page_number.toString().padStart(3, '0')}.TTF)`);
+            /*const fontFace = new FontFace("custom_font", `url(fonts/QCF_P${verse_page_number.toString().padStart(3, '0')}.TTF)`);
             document.fonts.add(fontFace);
 
             fontFace.load().then((loadedFace) => {
                 document.getElementById('glyph_text').style.fontFamily = loadedFace.family;
-            })
+            })*/
 
-            document.getElementById('glyph_text').innerHTML = glyph_text;
-            document.getElementById('verse_text').innerHTML = verse_text + '<br>- Surah ' + chapter_name + ' (' + verse_key + ')';
+            //document.getElementById('glyph_text').innerHTML = glyph_text;
+            document.getElementById('verse_text').innerHTML =
+                '<div style="text-align: right;">' + glyph_text + '</div>' +
+                '<br>' + verse_text +
+                '<br>- Surah ' + chapter_name + ' (' + verse_key + ')';
         })
 }
 
