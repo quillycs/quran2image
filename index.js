@@ -51,16 +51,51 @@ function generateVerse() {
         })
 }
 
-function copyVerseAsImage() {
-    document.fonts.ready.then(() => {
-        html2canvas(document.querySelector(".verse_container")).then(canvas => {
-            canvas.toBlob(blob => {
-                navigator.clipboard.write([
-                    new ClipboardItem({
-                        'image/png': blob
-                    })
-                ])
-            });
+function downloadImage() {
+    html2canvas(document.querySelector("#verse_container"), {
+        allowTaint: true,
+        useCORS: true
+    }).then(canvas => {
+        canvas.toBlob(blob => {
+            const link = document.createElement('a');
+            link.download = 'verse.png';
+            link.href = URL.createObjectURL(blob);
+            link.click();
         });
-    })
+    });
 }
+
+function copyVerseAsImage() {
+    html2canvas(document.querySelector("#verse_container"), {
+        allowTaint: true,
+        useCORS: true
+    }).then(canvas => {
+        canvas.toBlob(blob => {
+            navigator.clipboard.write([
+                new ClipboardItem({
+                    'image/png': blob
+                })
+            ]);
+        });
+    });
+}
+
+/*
+function invertTextColour() {
+    const verseText = document.getElementById('verse_text');
+    const currentColor = window.getComputedStyle(verseText).color;
+
+    if (currentColor === 'rgb(0, 0, 0)') {
+        verseText.style.color = 'white';
+    } else {
+        verseText.style.color = 'black';
+    }
+}
+*/
+
+/*
+function setBackgroundImage() {
+    var background_image_link = document.getElementById('background_image_link').value;
+    document.getElementById("verse_container").style.backgroundImage = 'url(' + background_image_link + ')';
+}
+*/
