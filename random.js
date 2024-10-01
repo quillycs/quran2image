@@ -52,7 +52,7 @@ function generateVerse() {
 }
 
 function copyVerseAsImage() {
-    html2canvas(document.querySelector("#verse_container"), {
+    html2canvas(document.querySelector("#output_container"), {
         allowTaint: true,
         useCORS: true
     }).then(canvas => {
@@ -67,7 +67,7 @@ function copyVerseAsImage() {
 }
 
 function downloadImage() {
-    html2canvas(document.querySelector("#verse_container"), {
+    html2canvas(document.querySelector("#output_container"), {
         allowTaint: true,
         useCORS: true
     }).then(canvas => {
@@ -96,6 +96,6 @@ function invertTextColour() {
 /*
 function setBackgroundImage() {
     var background_image_link = document.getElementById('background_image_link').value;
-    document.getElementById("verse_container").style.backgroundImage = 'url(' + background_image_link + ')';
+    document.getElementById("output_container").style.backgroundImage = 'url(' + background_image_link + ')';
 }
 */
