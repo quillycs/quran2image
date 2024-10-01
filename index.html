@@ -13,14 +13,16 @@
     <div class="container">
         <h1>quran2image</h1>
 
-        <ul>
-            <li><a href="index.html">Generate a specific verse</a></li>
-            <li><a href="random.html">Generate a random verse</a></li>
-        </ul>
+        <div id="input_container">
+            <ul>
+                <li><a href="index.html">Generate a specific verse</a></li>
+                <li><a href="random.html">Generate a random verse</a></li>
+            </ul>
+    
+            <input type="text" placeholder="(e.g., 1:1)" id="verse_key">
+        </div>
 
-        <input type="text" placeholder="(e.g., 1:1)" id="verse_key">
-
-        <div id="verse_container">
+        <div id="output_container">
             <!--<p id="glyph_text" style="text-align: right;"></p>-->
             <p id="verse_text"><i>Click "Generate" to produce an image of your chosen verse.</i></p>
         </div>
