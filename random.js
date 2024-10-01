@@ -2,25 +2,33 @@ function generateVerse() {
     let glyph_text;
     let verse_page_number;
     let verse_text;
-    let verse_key = document.getElementById('verse_key').value;
+    let verse_key;
     let chapter_name;
 
-    const url = 'https://api.quran.com/api/v4/quran/translations/20?verse_key=' + verse_key;
+    const url = 'https://api.quran.com/api/v4/verses/random';
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            verse_text = data.translations[0].text;
-            const url2 = 'https://api.quran.com/api/v4/chapters/' + verse_key;
+            verse_key = data.verse.verse_key;
+            verse_page_number = data.verse.page_number.toString();
+            const url2 = 'https://api.quran.com/api/v4/quran/translations/20?verse_key=' + verse_key;
             return fetch(url2);
+        })
+
+        .then(response => response.json())
+        .then(data => {
+            verse_text = data.translations[0].text;
+            const url3 = 'https://api.quran.com/api/v4/chapters/' + verse_key;
+            return fetch(url3);
         })
 
         .then(response => response.json())
         .then(data => {
             chapter_name = data.chapter.name_simple;
             /* const url4 = 'https://api.quran.com/api/v4/quran/verses/code_v1?verse_key=' + verse_key;*/
-            const url3 = 'https://api.quran.com/api/v4/quran/verses/uthmani?verse_key=' + verse_key;
-            return fetch(url3);
+            const url4 = 'https://api.quran.com/api/v4/quran/verses/uthmani?verse_key=' + verse_key;
+            return fetch(url4);
         })
 
         .then(response => response.json())
