@@ -1,2 +1,2 @@
 # quran2image
-Generate an image of a verse from the Quran.
+Create and share beautiful images of verses from the Quran.
