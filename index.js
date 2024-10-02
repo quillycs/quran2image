@@ -1,99 +1,53 @@
 function generateVerse() {
-    let glyph_text;
-    let verse_page_number;
-    let verse_text;
     let verse_key = document.getElementById('verse_key').value;
-    let chapter_name;
 
-    const url = 'https://api.quran.com/api/v4/quran/translations/20?verse_key=' + verse_key;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            verse_text = data.translations[0].text;
-            const url2 = 'https://api.quran.com/api/v4/chapters/' + verse_key;
-            return fetch(url2);
-        })
-
-        .then(response => response.json())
-        .then(data => {
-            chapter_name = data.chapter.name_simple;
-            /* const url4 = 'https://api.quran.com/api/v4/quran/verses/code_v1?verse_key=' + verse_key;*/
-            const url3 = 'https://api.quran.com/api/v4/quran/verses/uthmani?verse_key=' + verse_key;
-            return fetch(url3);
-        })
-
-        .then(response => response.json())
-        .then(data => {
-            //glyph_text = data.verses[0].code_v1;
-            glyph_text = data.verses[0].text_uthmani;
-
-            /*const fontFace = new FontFace("custom_font", `url(fonts/QCF_P${verse_page_number.toString().padStart(3, '0')}.TTF)`);
-            document.fonts.add(fontFace);
-
-            fontFace.load().then((loadedFace) => {
-                document.getElementById('glyph_text').style.fontFamily = loadedFace.family;
-            })*/
-
-            //document.getElementById('glyph_text').innerHTML = glyph_text;
-            document.getElementById('verse_text').innerHTML =
-                '<div style="text-align: right;">' + glyph_text + '</div>' +
-                '<br>' + verse_text +
-                '<br>- Surah ' + chapter_name + ' (' + verse_key + ')';
-        })
+    fetchVerseDetails(verse_key)
+        .then(displayVerse)
+        .catch(error => console.error("Error generating verse:", error));
 }
 
 function generateRandomVerse() {
-    let glyph_text;
-    let verse_page_number;
-    let verse_text;
-    let verse_key;
-    let chapter_name;
-
-    const url = 'https://api.quran.com/api/v4/verses/random';
-
-    fetch(url)
+    fetch('https://api.quran.com/api/v4/verses/random')
         .then(response => response.json())
         .then(data => {
-            verse_key = data.verse.verse_key;
-            verse_page_number = data.verse.page_number.toString();
-            const url2 = 'https://api.quran.com/api/v4/quran/translations/20?verse_key=' + verse_key;
-            return fetch(url2);
+            const verse_key = data.verse.verse_key;
+            const verse_page_number = data.verse.page_number.toString();
+            return fetchVerseDetails(verse_key, verse_page_number);
         })
+        .then(displayVerse)
+        .catch(error => console.error("Error generating random verse:", error));
+}
 
+function fetchVerseDetails(verse_key, verse_page_number = '') {
+    let verse_text, chapter_name, glyph_text;
+
+    const translationUrl = `https://api.quran.com/api/v4/quran/translations/20?verse_key=${verse_key}`;
+    const chapterUrl = `https://api.quran.com/api/v4/chapters/${verse_key}`;
+    const verseUrl = `https://api.quran.com/api/v4/quran/verses/uthmani?verse_key=${verse_key}`;
+
+    return fetch(translationUrl)
         .then(response => response.json())
         .then(data => {
             verse_text = data.translations[0].text;
-            const url3 = 'https://api.quran.com/api/v4/chapters/' + verse_key;
-            return fetch(url3);
+            return fetch(chapterUrl);
         })
-
         .then(response => response.json())
         .then(data => {
             chapter_name = data.chapter.name_simple;
-            /* const url4 = 'https://api.quran.com/api/v4/quran/verses/code_v1?verse_key=' + verse_key;*/
-            const url4 = 'https://api.quran.com/api/v4/quran/verses/uthmani?verse_key=' + verse_key;
-            return fetch(url4);
+            return fetch(verseUrl);
         })
-
         .then(response => response.json())
         .then(data => {
-            //glyph_text = data.verses[0].code_v1;
             glyph_text = data.verses[0].text_uthmani;
+            return { verse_text, chapter_name, glyph_text, verse_key, verse_page_number };
+        });
+}
 
-            /*const fontFace = new FontFace("custom_font", `url(fonts/QCF_P${verse_page_number.toString().padStart(3, '0')}.TTF)`);
-            document.fonts.add(fontFace);
-
-            fontFace.load().then((loadedFace) => {
-                document.getElementById('glyph_text').style.fontFamily = loadedFace.family;
-            })*/
-
-            //document.getElementById('glyph_text').innerHTML = glyph_text;
-            document.getElementById('verse_text').innerHTML =
-                '<div style="text-align: right;">' + glyph_text + '</div>' +
-                '<br>' + verse_text +
-                '<br>- Surah ' + chapter_name + ' (' + verse_key + ')';
-        })
+function displayVerse({ verse_text, chapter_name, glyph_text, verse_key }) {
+    document.getElementById('verse_text').innerHTML =
+        `<div style="text-align: right;">${glyph_text}</div>
+         <br>${verse_text}
+         <br>- Surah ${chapter_name} (${verse_key})`;
 }
 
 function copyVerseAsImage() {
@@ -103,9 +57,7 @@ function copyVerseAsImage() {
     }).then(canvas => {
         canvas.toBlob(blob => {
             navigator.clipboard.write([
-                new ClipboardItem({
-                    'image/png': blob
-                })
+                new ClipboardItem({ 'image/png': blob })
             ]);
         });
     });
@@ -124,23 +76,3 @@ function downloadImage() {
         });
     });
 }
-
-/*
-function invertTextColour() {
-    const verseText = document.getElementById('verse_text');
-    const currentColor = window.getComputedStyle(verseText).color;
-
-    if (currentColor === 'rgb(0, 0, 0)') {
-        verseText.style.color = 'white';
-    } else {
-        verseText.style.color = 'black';
-    }
-}
-*/
-
-/*
-function setBackgroundImage() {
-    var background_image_link = document.getElementById('background_image_link').value;
-    document.getElementById("output_container").style.backgroundImage = 'url(' + background_image_link + ')';
-}
-*/
