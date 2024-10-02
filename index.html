@@ -7,31 +7,29 @@
     <title>quran2image</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
         <h1>quran2image</h1>
 
+        <h2 id="description">Create and share beautiful images of verses from the Quran.</h2>
+
         <div id="input_container">
-            <ul>
-                <li><a href="index.html">Generate a specific verse</a></li>
-                <li><a href="random.html">Generate a random verse</a></li>
-            </ul>
-    
             <input type="text" placeholder="(e.g., 1:1)" id="verse_key">
+            <button onclick="generateVerse()">Generate</button>
+            <button onclick="generateRandomVerse()">Random</button>
+            <button onclick="copyVerseAsImage()">⧉</button>
+            <button onclick="downloadImage()">Export</button>
         </div>
 
         <div id="output_container">
             <!--<p id="glyph_text" style="text-align: right;"></p>-->
-            <p id="verse_text"><i>Click "Generate" to produce an image of your chosen verse.</i></p>
-        </div>
-
-        <div class="button_container">
-            <button onclick="generateVerse()">Generate</button>
-            <button onclick="copyVerseAsImage()">Copy</button>
-            <button onclick="downloadImage()">Download</button>
-            <!--<button onclick="invertTextColour()">Invert</button>-->
+            <p id="verse_text"><i>Pick a verse and click "Generate" or just use "Random".</i></p>
         </div>
 
         <!--<input type="text" id="background_image_link">
